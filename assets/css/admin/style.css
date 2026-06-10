@@ -1,0 +1,324 @@
+/* ============================================================
+   PILAR – Admin Portal Master Stylesheet (Pelapor Blueprint Engine)
+   ============================================================ */
+
+/* --- Google Fonts (Dipaksa Muat Teratas) --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Caveat:wght@500;600;700&display=swap');
+
+/* --- CSS Variables Pelapor Sempurna --- */
+:root {
+  --sky:        #A5D8FF;
+  --sky-deep:   #74C0FC;
+  --blush:      #FFD6D6;
+  --blush-deep: #FFB3B3;
+  --cream:      #FFF8F0;
+  --mint:       #D3F9D8;
+  --mint-deep:  #8CE99A;
+  --lavender:   #E8D5F5;
+  --sand:       #FFF3E0;
+  --dark:       #2B3A4A;
+  --muted:      #6B7F94;
+  --light:      #F0F7FF;
+  --sidebar-w:  260px;
+}
+
+/* --- Reset & Base Layout --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; font-family: 'Poppins', sans-serif; background: var(--cream); color: var(--dark); }
+body { overflow: hidden; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+input, textarea, select { font-family: inherit; }
+input::placeholder, textarea::placeholder { color: #9CB3C9; }
+
+/* --- Custom Scrollbar --- */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-thumb { background: var(--sky); border-radius: 4px; }
+
+/* ============================================================
+   Layout Base App Architecture
+   ============================================================ */
+#app { display: flex; height: 100vh; width: 100%; overflow: hidden; }
+.app-layout { display: flex; width: 100%; height: 100%; overflow: hidden; }
+.main-content { flex: 1; overflow-y: auto; overflow-x: hidden; background: rgba(255,248,240,0.5); padding: 2rem; }
+
+/* ============================================================
+   Sidebar & Nav Items (100% Meniru Pola Pelapor)
+   ============================================================ */
+.sidebar {
+  width: var(--sidebar-w);
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  border-right: 1px solid rgba(165,216,255,0.18);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, width 0.3s ease;
+  z-index: 40;
+}
+
+.sidebar-brand { padding: 1.5rem 1.5rem 1rem; }
+.sidebar-brand-inner { display: flex; align-items: center; gap: 0.75rem; }
+.sidebar-name { font-weight: 700; font-size: 1.125rem; color: var(--dark); }
+
+.sidebar-nav { flex: 1; padding: 0 0.75rem; display: flex; flex-direction: column; gap: 0.25rem; }
+.nav-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 16px;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  text-align: left;
+  width: 100%;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.nav-item:hover { background: rgba(165,216,255,0.2); color: var(--dark); }
+.nav-item.active {
+  background: linear-gradient(135deg, rgba(165,216,255,0.4), rgba(255,214,214,0.3));
+  color: var(--dark);
+  font-weight: 600;
+}
+.nav-item i { width: 18px; height: 18px; flex-shrink: 0; }
+
+.sidebar-user { margin: 0 0.75rem 0.75rem; padding: 0.75rem 1rem; background: var(--light); border-radius: 16px; }
+.sidebar-user-inner { display: flex; align-items: center; gap: 0.75rem; }
+.avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blush), var(--blush-deep));
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 0.6875rem; font-weight: 700; flex-shrink: 0;
+  background-size: cover; background-position: center;
+}
+.avatar-name { font-size: 0.75rem; font-weight: 600; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.avatar-role { font-size: 0.625rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.sidebar-logout { margin: 0 0.75rem 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.625rem 1rem; border-radius: 16px; font-size: 0.75rem; color: var(--muted); transition: background 0.2s; }
+.sidebar-logout:hover { background: rgba(255,214,214,0.3); }
+
+.sidebar-overlay { display: none; position: fixed; inset: 0; z-index: 35; background: rgba(43,58,74,0.25); backdrop-filter: blur(2px); }
+
+/* ============================================================
+   Mobile Header Top Bar
+   ============================================================ */
+.mobile-header {
+  display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(165,216,255,0.2); padding: 0.75rem 1rem;
+  align-items: center; justify-content: space-between;
+}
+.mobile-brand { display: flex; align-items: center; gap: 0.6rem; }
+.hamburger {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--dark); transition: background 0.2s;
+}
+.hamburger:hover { background: var(--light); }
+
+/* ============================================================
+   Dashboard Grid & Card Elements
+   ============================================================ */
+.page-header { margin-bottom: 2rem; }
+.page-title { font-size: 1.5rem; font-weight: 700; color: var(--dark); }
+.page-sub { font-size: 0.8125rem; color: var(--muted); margin-top: 0.25rem; }
+.page-script-title { font-family: 'Caveat', cursive; font-size: 2.25rem; color: var(--dark); }
+
+.stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 2rem; width: 100%; }
+.stat-card { background: white; border-radius: 16px; padding: 1rem; border: 1px solid rgba(165,216,255,0.15); box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+.stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(165,216,255,0.2); }
+.stat-icon { width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem; }
+.stat-label { font-size: 0.6875rem; color: var(--muted); margin-bottom: 0.25rem; }
+.stat-value { font-size: 1.5rem; font-weight: 700; color: var(--dark); }
+
+.cta-banner { background: linear-gradient(135deg, rgba(255,214,214,0.55), rgba(255,255,255,0.9), rgba(165,216,255,0.4)); border-radius: 24px; padding: 1.75rem 2rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1.5rem; border: 1px solid rgba(255,179,179,0.2); animation: pulse-gentle 3s ease-in-out infinite; }
+.cta-text { flex: 1; }
+.cta-title { font-size: 1rem; font-weight: 600; color: var(--dark); line-height: 1.4; }
+.cta-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+
+.section-title { font-size: 1rem; font-weight: 600; color: var(--dark); margin-bottom: 1rem; }
+
+/* ============================================================
+   Status Badges & Overlays
+   ============================================================ */
+.status-menunggu { background: #FFF3E0; color: #E67700; }
+.status-proses { background: #E8F4FD; color: #1C7ED6; }
+.status-selesai { background: #D3F9D8; color: #2B8A3E; }
+.status-ditolak { background: #FFD6D6; color: #C92A2A; }
+.status-diverifikasi { background: #E8D5F5; color: #7B2D8E; }
+
+.modal-overlay { position: fixed; inset: 0; z-index: 50; display: none; align-items: center; justify-content: center; background: rgba(43,58,74,0.3); backdrop-filter: blur(4px); padding: 1rem; }
+.modal-overlay.open { display: flex; }
+
+#toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(16px); background: var(--dark); color: white; padding: 0.75rem 1.5rem; border-radius: 16px; font-size: 0.875rem; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,0.2); opacity: 0; pointer-events: none; z-index: 200; transition: opacity 0.3s, transform 0.3s; white-space: nowrap; }
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* --- Animations Keyframes --- */
+@keyframes floatUp { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes pulse-gentle { 0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(165,216,255,0.25); } 50% { transform: scale(1.005); box-shadow: 0 0 20px 8px rgba(165,216,255,0.1); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.float-anim { animation: floatUp 3s ease-in-out infinite; }
+.slide-up { animation: slideUp 0.4s ease forwards; }
+
+/* ============================================================
+   PILAR – Sempurna Chat Layout Engine (100% Sesuai Gambar Maket 3)
+   ============================================================ */
+/* Desktop Tetap Menampilkan List Kiri dengan Proporsi Elemen yang Stabil */
+#admin-chat-wrapper > div:first-child {
+  width: 340px !important;
+  flex-shrink: 0;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+}
+
+/* Sembunyikan tombol back panah kiri saat dibuka di resolusi Laptop/Desktop */
+.chat-mobile-back-btn {
+  display: none !important;
+}
+
+/* Kunci Tinggi Fleksibel Halaman Chat */
+.main-content.flex.flex-col.h-full {
+  height: 100vh !important;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   Responsive Queries Engine (Anti-Full Screen HP Drawer)
+   ============================================================ */
+@media (max-width: 1024px) {
+  .stat-grid { grid-template-columns: repeat(3, 1fr); }
+  .cta-banner { gap: 1rem; padding: 1.25rem 1.5rem; }
+}
+
+@media (max-width: 768px) {
+  body { overflow: auto; }
+  #app { height: auto; min-height: 100vh; flex-direction: column; }
+  .app-layout { flex-direction: column; height: auto; overflow: visible; }
+  .main-content {
+    padding: 1rem !important;
+    /* Sesuaikan tinggi ini dengan tinggi mobile-header Anda */
+    padding-top: 4rem !important; 
+    min-height: 100vh;
+    overflow: visible;
+  }
+  
+  /* Sidebar Drawer Ramping dari Samping Kiri Layar */
+  .sidebar { 
+    position: fixed; top: 0; left: 0; bottom: 0; 
+    transform: translateX(-100%); 
+    box-shadow: 4px 0 24px rgba(0,0,0,0.1);
+  }
+  .sidebar.open { transform: translateX(0); }
+  
+  /* Bersihkan kebocoran sisa bayangan hitam overlay di tepi kiri mobile */
+  .sidebar-overlay { 
+    display: block !important;
+    position: fixed; inset: 0; z-index: 35;
+    background: rgba(43,58,74,0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .sidebar-overlay.open {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  
+  .mobile-header { display: flex; }
+  
+  /* Tambah jarak padding atas agar judul tidak menabrak mobile-header */
+  .main-content {
+    padding: 1rem !important;
+    padding-top: 5rem !important;
+    min-height: 100vh;
+    overflow: visible;
+  }
+  
+  .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .cta-banner { flex-direction: column; text-align: center; gap: 1rem; }
+
+  /* ============================================================
+     MOBILE CHAT FIX (List Penuh di Awal -> Chat Box Penuh & Sticky Input di Bawah)
+     ============================================================ */
+  /* Ubah kontainer utama agar mengikuti tinggi layar di mobile */
+  #admin-chat-wrapper {
+    height: calc(100vh - 11rem) !important;
+    min-height: 480px !important;
+    position: relative;
+  }
+
+  /* Tampilan Default HP: Daftar saluran menguasai seluruh lebar */
+  #admin-chat-wrapper > div:first-child {
+    width: 100% !important;
+  }
+
+  /* Sembunyikan boks empty-state bawaan desktop di HP */
+  #admin-chat-empty-state {
+    display: none !important;
+  }
+
+  /* Kunci agar ruang chat tersembunyi sebelum ada saluran yang diklik */
+  #admin-chat-active-box {
+    display: none !important;
+  }
+
+  /* REVISI: Aktifkan visual tombol back panah kiri eksklusif di Mobile */
+  .chat-mobile-back-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* KONTROL RESPONSIVE SAKLAR MOBILE: Saat saluran dipilih (.channel-selected) */
+  #admin-chat-wrapper.channel-selected > div:first-child {
+    display: none !important;
+  }
+
+  #admin-chat-wrapper.channel-selected #admin-chat-active-box {
+    display: flex !important;
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 10;
+  }
+
+  /* FIX UX INPUT: Paksa ruang input nempel paling bawah dan scrollable area chat di atasnya */
+  #admin-chat-active-box {
+    height: 100% !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #admin-chat-box-messages-container {
+    flex: 1 !important;
+    overflow-y: auto !important;
+  }
+
+  #admin-chat-active-box > div:last-child {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    padding: 0.75rem !important;
+    z-index: 20;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 0.625rem; }
+  .stat-value { font-size: 1.25rem; }
+  .page-title { font-size: 1.25rem; }
+}
+
+/* ============================================================
+   Cetak Resmi Print Mode rules
+   ============================================================ */
+@media print {
+  body { background: white; color: black; overflow: visible !important; }
+  aside, button, header, .no-print, .sidebar, .mobile-header, .sidebar-overlay { display: none !important; }
+  #app, .app-layout { display: block !important; height: auto !important; }
+  main, .main-content { padding: 0 !important; padding-top: 0 !important; background: transparent !important; width: 100% !important; overflow: visible !important; }
+  table { border: 1px solid #ccc !important; width: 100% !important; border-collapse: collapse !important; }
+  th, td { border: 1px solid #ccc !important; padding: 10px !important; }
+}
